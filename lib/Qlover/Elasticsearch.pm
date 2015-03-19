@@ -24,7 +24,8 @@ sub _nodes {
 
 sub _parse_path {
     my ($class, $path) = @_;
-    split /\//, $path, 2;
+    my ($index, $type) = $path =~ /^\/(.+?)\/(.+)$/;
+    return ($index, $type);
 }
 
 sub index {
