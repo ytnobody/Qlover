@@ -9,6 +9,7 @@ requires 'Server::Starter';
 requires 'Linux::Inotify2';
 requires 'Time::Piece';
 requires 'Log::Minimal';
+requires 'Proclet';
 
 on 'test' => sub {
     requires 'HTTP::Request::Common';
