@@ -8,6 +8,7 @@ requires 'Plack::Handler::Starlet';
 requires 'Server::Starter';
 requires 'Linux::Inotify2';
 requires 'Time::Piece';
+requires 'Log::Minimal';
 
 on 'test' => sub {
     requires 'HTTP::Request::Common';

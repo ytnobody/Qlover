@@ -28,18 +28,21 @@ sub _parse_path {
     return ($index, $type);
 }
 
-sub index {
+sub add {
     my ($class, $path, $data) = @_;
     croak('Path and Data is required') unless $path && $data;
 
     my ($index, $type) = $class->_parse_path($path);
     croak('Path is not contains their type') unless $index && $type;
 
-    $class->_es->index(
+    my %data = (
         index => $index, 
         type  => $type, 
         body  => { %$data, timestamp => localtime->strftime('%Y-%m-%d %H:%M:%S') },
     );
+    my $res = $class->_es->index( %data
+    );
+    $res;
 }
 
 1;
