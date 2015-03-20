@@ -7,4 +7,5 @@ use File::Basename 'dirname';
 use lib ( File::Spec->catdir(dirname(__FILE__), qw/.. lib/) );
 use Qlover::Worker;
 
-Qlover::Worker->run(@ARGV);
+my $options = $ENV{QLOVER_WORKER_OPTS};
+Qlover::Worker->run( (split / /, $options), @ARGV);

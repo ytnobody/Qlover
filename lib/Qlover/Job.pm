@@ -7,8 +7,8 @@ use Qlover::JSON;
 use Guard;
 use Carp;
 
-our $JOB_PATH = '/tmp';
-our $JOB_PREFIX = 'qlover';
+our $JOB_PATH = $ENV{QLOVER_JOB_PATH} || '/tmp';
+our $JOB_PREFIX = $ENV{QLOVER_JOB_PREFIX} || 'qlover';
 
 sub create {
     my ($class, %opts) = @_;
