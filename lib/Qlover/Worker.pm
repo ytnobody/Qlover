@@ -8,7 +8,15 @@ use Qlover::Elasticsearch;
 use Log::Minimal;
 
 sub run {
-    my $class = shift;
+    my ($class, %opts) = @_;
+    $opts{'--without-inotify'} ? 
+        $class->_run_without_inotify(%opts) :
+        $class->_run(%opts)
+    ;
+}
+
+sub _run {
+    my ($class, %opts) = @_;
 
     my @events;
     my $inotify = Linux::Inotify2->new or die $!;
@@ -26,6 +34,32 @@ sub run {
 
         for my $event (@events) {
             my $jobfile = $event->name;
+            $job = eval { Qlover::Job->fetch($jobfile) };
+            if ($@) {
+                warn $@;
+                next;
+            }
+            $class->task($job);
+        }
+    }
+}
+
+sub _run_without_inotify {
+    my ($class, %opts) = @_;
+
+    my @events;
+    my $job_dir = $Qlover::Job::JOB_PATH;
+    my $job_prefix = $Qlover::Job::JOB_PREFIX;
+    my $job;
+
+    infof 'Without Inotify';
+    infof 'Watching %s in pid %s', $job_dir, $$;
+    while (1) {
+        sleep 1;
+        @events = map {$_ =~ s/^$job_dir\///; $_;} glob "$job_dir/$job_prefix*";
+        next unless @events;
+
+        for my $jobfile (@events) {
             $job = eval { Qlover::Job->fetch($jobfile) };
             if ($@) {
                 warn $@;
