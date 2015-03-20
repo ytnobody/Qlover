@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Analyse with Google BigQuery. Then, Store these into Elasticsearch.",
    "author" : [
       "ytnobody <ytnobody@gmail.com>"
    ],
@@ -42,16 +42,38 @@
       },
       "runtime" : {
          "requires" : {
+            "Carp" : "0",
+            "File::Temp" : "0",
+            "Guard" : "0",
+            "JSON" : "0",
+            "Linux::Inotify2" : "0",
+            "Log::Minimal" : "0",
+            "Plack::Handler::Starlet" : "0",
+            "Search::Elasticsearch" : "0",
+            "Server::Starter" : "0",
+            "Time::Piece" : "0",
             "perl" : "5.008001"
          }
       },
       "test" : {
          "requires" : {
+            "HTTP::Request::Common" : "0",
             "Test::More" : "0.98"
          }
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/ytnobody/Qlover/issues"
+      },
+      "homepage" : "https://github.com/ytnobody/Qlover",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/ytnobody/Qlover.git",
+         "web" : "https://github.com/ytnobody/Qlover"
+      }
+   },
    "version" : "0.01",
    "x_authority" : "cpan:YTURTLE"
 }
